@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm install
+      - apt install zip -y
   build:
     commands:
       - npm -v
