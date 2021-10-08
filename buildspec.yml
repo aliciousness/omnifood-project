@@ -7,5 +7,8 @@ phases:
   build:
     commands:
       - npm -v
+  post_build:
+    commands: -zip -r omnifood-zip.zip
 artifacts:
-  name: -richnet-website.zip
+  files:
+    - '**/*'
