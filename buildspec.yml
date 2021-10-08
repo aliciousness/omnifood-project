@@ -8,5 +8,4 @@ phases:
     commands:
       - npm -v
 artifacts:
-  s3-prefix:
-    - <s3-prefix>/<build-id>/<richnet-website>.zip.
+  name: -richnet-website.zip
