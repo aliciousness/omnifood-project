@@ -15,3 +15,4 @@ phases:
       - cd ../outputDirectory
       - zip -r myBuild.zip .
       - aws s3 cp myBuild.zip s3://${S3_BUCKET}/myBuild.zip
+      - echo 'done'
