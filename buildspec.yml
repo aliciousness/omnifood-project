@@ -1,12 +1,17 @@
 version: 0.2
 
+env:
+  variables:
+    S3_BUCKET: my-packages-bucket
 phases:
   install:
-    commands:
-      - apt install zip -y
+    runtime-versions: nodejs:12
   build:
     commands:
-      - npm -v
-artifacts:
-  files:
-    - '**/*'
+      - npm install
+      - npm test
+  post_build:
+    commands:
+      - cd ../outputDirectory
+      - zip -r myBuild.zip .
+      - aws s3 cp myBuild.zip s3://${S3_BUCKET}/myBuild.zip
