@@ -1,15 +1,24 @@
 version: 0.2
-
+env:
+  variables:
+    S3_BUCKET: my-packages-bucket
 phases:
   install:
-    runtime-versions: nodejs:12
+    runtime-versions:
+      dotnet: 3.1
   build:
     commands:
-      - npm install
-      - npm test
+      - echo "CD into source folder, because my source code is tidy"
+      - cd src
+      - echo "Restore, Build, then Publish.."
+      - dotnet restore
+      - dotnet build --no-restore
+      - dotnet publish --no-restore --output outputDirectory
   post_build:
     commands:
+      - echo "Compressing the package.."
       - cd ../outputDirectory
       - zip -r myBuild.zip .
+      - echo "Uploading to S3.."
       - aws s3 cp myBuild.zip s3://${S3_BUCKET}/myBuild.zip
-      - echo 'done'
+      - echo "Done."
