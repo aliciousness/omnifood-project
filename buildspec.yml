@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    - S3_BUCKET:richnet-website
+    S3_BUCKET: richnet-website
 phases:
   install:
     runtime-versions:
