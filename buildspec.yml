@@ -10,7 +10,6 @@ phases:
     commands:
       - npm install
       - npm build
-
   post_build:
     commands:
       - zip -r myBuild.zip .
