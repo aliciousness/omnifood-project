@@ -9,13 +9,13 @@
 # 	for name in directories:
 # 		print(os.path.join(root, name))
 #----------------------------------------------------------------------------------------------------------------------------------------
-import boto3 
-zip = client.get_object(Bucket='richnet-website',Key='myBuild.zip') 
-for f in zip:
-      print(f)
+# import boto3 
+# zip = client.get_object(Bucket='richnet-website',Key='myBuild.zip') 
+# for f in zip:
+#     print(f)
       
 
-  '''
+'''
   import boto3
   
   client = boto3.client('s3')
@@ -30,7 +30,7 @@ for f in zip:
   **for f in zip:
   **    print(f)
   this script prints all the names of the files in this bucket. do i know if its zipped, no idea
-  '''
+'''
   
   
   # -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -48,22 +48,33 @@ key='myBuild.zip'
 s3 = boto3.resource('s3')
 my_bucket = s3.Bucket(BUCKET)
 
-# mem buffer
 filebytes = BytesIO()
 
-# download to the mem buffer
 my_bucket.download_fileobj(key, filebytes)
 
-# create zipfile obj
 file = zipfile.ZipFile(filebytes)
 
-# extact to local C: drive
 file.extractall('/tmp/extract_test')
 
-path = '/tmp/extract_test'
+path = 'C:/Users/cradd/tmp'
 
-for root, direct, files in os.walk(path, topdown=False):
+for root, direct, files in os.walk(path):
 	for name in files:
-		s3.meta.client.upload_file(f'{os.path.join(root, name)}','unzipped-richnet-website',f'{name}')
-	for name in direct:
-		s3.meta.client.upload_file(f'{os.path.join(root, name)}','unzipped-richnet-website',f'{name}')
+    old = r'{}'.format(os.path.join(root, name)) 
+    newPath = old.replace(os.sep,'/')[29::]
+    s3.meta.client.upload_file(old,'unzipped-richnet-website',key)
+  # for name in direct:               NOTE dont need all this, not sure why i put this in this if i walk through files, it will walk through all dirs and sub dirs to all files in the directory path i choose. 
+  #   old = r'{}'.format(os.path.join(root, name))  #didnt try this yet 
+  #   newPath = old.replace(os.sep,'/')
+  #   s3.meta.client.upload_file(f'{newPath}','unzipped-richnet-website',f'{name}')
+
+
+# import os
+
+# path = r"C:\temp\myFolder\example"
+
+# newPath = path.replace(os.sep, '/')
+
+# print(newPath)
+
+
