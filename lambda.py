@@ -63,10 +63,12 @@ for root, direct, files in os.walk(path):
     old = r'{}'.format(os.path.join(root, name)) 
     newPath = old.replace(os.sep,'/')[29::]
     s3.meta.client.upload_file(old,'unzipped-richnet-website',key)
-  # for name in direct:               NOTE dont need all this, not sure why i put this in this if i walk through files, it will walk through all dirs and sub dirs to all files in the directory path i choose. 
-  #   old = r'{}'.format(os.path.join(root, name))  #didnt try this yet 
-  #   newPath = old.replace(os.sep,'/')
-  #   s3.meta.client.upload_file(f'{newPath}','unzipped-richnet-website',f'{name}')
+  
+  
+# for name in direct:               NOTE dont need all this, not sure why i put this in this if i walk through files, it will walk through all dirs and sub dirs to all files in the directory path i choose. 
+#   old = r'{}'.format(os.path.join(root, name))  #didnt try this yet 
+#   newPath = old.replace(os.sep,'/')
+#   s3.meta.client.upload_file(f'{newPath}','unzipped-richnet-website',f'{name}')
 
 
 # import os
@@ -78,3 +80,12 @@ for root, direct, files in os.walk(path):
 # print(newPath)
 
 
+
+import json
+
+def lambda_handler(event, context):
+    # TODO implement
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
