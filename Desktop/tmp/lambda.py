@@ -54,27 +54,19 @@ my_bucket.download_fileobj(key, filebytes)
 
 file = zipfile.ZipFile(filebytes)
 
-file.extractall('Desktop/tmp') # where everywhere you want it to go, /tmp is for aws lambda only IMPORTANT
+file.extractall('/tmp/extract_test')
 
-path = 'Desktop/tmp'
+path = 'C:/Users/cradd/tmp'
 
-#on mac
-for root,dirs,files in os.walk(path):
-  for name in files:
-    s3.meta.client.upload_file(os.path.join(root,name),'unzipped-richnet-website',name)
-
-# on windows IMPORTANT
-# for root, dirs, files in os.walk(path):
-# 	for name in files:
-#     old = r'{}'.format(os.path.join(root, name)) 
-#     newPath = old.replace(os.sep,'/')[29::]
-#     s3.meta.client.upload_file(old,'unzipped-richnet-website',key)
-  
-  
-# for name in direct:               NOTE dont need all this, not sure why i put this in this if i walk through files, it will walk through all dirs and sub dirs to all files in the directory path i choose. 
-#   old = r'{}'.format(os.path.join(root, name))  #didnt try this yet 
-#   newPath = old.replace(os.sep,'/')
-#   s3.meta.client.upload_file(f'{newPath}','unzipped-richnet-website',f'{name}')
+for root, direct, files in os.walk(path):
+	for name in files:
+    old = r'{}'.format(os.path.join(root, name)) 
+    newPath = old.replace(os.sep,'/')[29::]
+    s3.meta.client.upload_file(old,'unzipped-richnet-website',key)
+  # for name in direct:               NOTE dont need all this, not sure why i put this in this if i walk through files, it will walk through all dirs and sub dirs to all files in the directory path i choose. 
+  #   old = r'{}'.format(os.path.join(root, name))  #didnt try this yet 
+  #   newPath = old.replace(os.sep,'/')
+  #   s3.meta.client.upload_file(f'{newPath}','unzipped-richnet-website',f'{name}')
 
 
 # import os
@@ -86,12 +78,3 @@ for root,dirs,files in os.walk(path):
 # print(newPath)
 
 
-
-import json
-
-def lambda_handler(event, context):
-    # TODO implement
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
-    }
