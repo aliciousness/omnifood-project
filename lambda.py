@@ -54,15 +54,21 @@ my_bucket.download_fileobj(key, filebytes)
 
 file = zipfile.ZipFile(filebytes)
 
-file.extractall('/tmp/extract_test')
+file.extractall('/tmp') # where everywhere you want it to go, /tmp is for aws lambda only IMPORTANT
 
-path = 'C:/Users/cradd/tmp'
+path = '/tmp'
 
-for root, direct, files in os.walk(path):
-	for name in files:
-    old = r'{}'.format(os.path.join(root, name)) 
-    newPath = old.replace(os.sep,'/')[29::]
-    s3.meta.client.upload_file(old,'unzipped-richnet-website',key)
+#on mac
+for root,dirs,files in os.walk(path):
+  for name in files:
+    s3.meta.client.upload_file(os.path.join(root,name),'unzipped-richnet-website',name)
+
+# on windows IMPORTANT
+# for root, dirs, files in os.walk(path):
+# 	for name in files:
+#     old = r'{}'.format(os.path.join(root, name)) 
+#     newPath = old.replace(os.sep,'/')[29::]
+#     s3.meta.client.upload_file(old,'unzipped-richnet-website',key)
   
   
 # for name in direct:               NOTE dont need all this, not sure why i put this in this if i walk through files, it will walk through all dirs and sub dirs to all files in the directory path i choose. 
