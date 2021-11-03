@@ -54,9 +54,9 @@ my_bucket.download_fileobj(key, filebytes)
 
 file = zipfile.ZipFile(filebytes)
 
-file.extractall('Desktop/tmp') # where everywhere you want it to go, /tmp is for aws lambda only IMPORTANT
+file.extractall('/tmp') # where everywhere you want it to go, /tmp is for aws lambda only IMPORTANT
 
-path = 'Desktop/tmp'
+path = '/tmp'
 
 #on mac
 for root,dirs,files in os.walk(path):
