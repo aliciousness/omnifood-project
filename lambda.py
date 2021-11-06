@@ -61,7 +61,7 @@ path = '/tmp'
 #on mac
 for root,dirs,files in os.walk(path):
   for name in files:
-    s3.meta.client.upload_file(os.path.join(root,name),'unzipped-richnet-website',name)
+    s3.meta.client.upload_file(os.path.join(root, name),'unzipped-richnet-website',name)
 
 # on windows IMPORTANT
 # for root, dirs, files in os.walk(path):
