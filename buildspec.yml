@@ -1,7 +1,5 @@
 version: 0.2
-env:
-  variables:
-    S3_BUCKET: richnet-website
+
 phases:
   install:
     runtime-versions:
@@ -12,6 +10,5 @@ phases:
       - npm build
   post_build:
     commands:
-      - pwd
-      - zip -r myBuild.zip .
-      - aws s3 cp myBuild.zip s3://${S3_BUCKET}/myBuild.zip
+      - aws s3 cp ./ s3://$S3_BUCKET/ --recursive  --exclude "*.yaml" --exclude "*.md" --exclude "*.json" --exclude ".DS_Store"
+      - aws s3 ls s3://$S3_BUCKET
